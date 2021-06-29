@@ -37,8 +37,9 @@
             </div>
         </div>
     </div>
-    @endif
+    @else
 <div class="m-auto col-md-6">
 <img src="{{ asset('img/not.jpg') }}" class="img-fluid" alt="">
 </div>
+@endif
 @endsection

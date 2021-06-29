@@ -2,14 +2,14 @@
 <style>
     .title{
         font-weight: bold;
-        color: rgb(230, 47, 47)
+        color: rgb(79, 148, 226)
     }
     .title::after{
         content: " - :"
     }
     .title::before{
         content: "- "
-    }
+    }  
 </style>
 @section('content')
     <div class="container col-md-10">

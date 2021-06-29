@@ -6,7 +6,7 @@ body{
     background-color: #333;
 }
 .navbar{
-    background : linear-gradient(to top, #111 , #222 , #333 , #444) !important;
+    background : linear-gradient(to right, #111 , #222 , rgb(73, 42, 42) , rgb(219, 88, 88)) !important;
     border-bottom: 1px solid white;
 
 }

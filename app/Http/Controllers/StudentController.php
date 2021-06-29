@@ -6,7 +6,8 @@ use App\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
-{    public function __construct()
+{
+        public function __construct()
     {
         $this->middleware('auth');
     }

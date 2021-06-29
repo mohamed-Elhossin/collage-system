@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-
+use App\Theem;
 
 use Illuminate\Http\Request;
 
@@ -89,6 +89,18 @@ class AdminController extends Controller
         $user = User::find($id);
         $user->delete();
         return redirect()->back()->with("done", "Delete Done");
+    }
+
+    public function darkmood($id)
+    {
+      $dark = User::find($id);
+      if( $dark->theem == 0){
+        $dark->theem = 1;
+      }else{
+        $dark->theem = 0;
+      }
+      $dark->save();
+      return redirect()->back();
     }
 
 }

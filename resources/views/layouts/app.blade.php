@@ -12,7 +12,11 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @if (Auth::user())
+    @if ( Auth::user()->theem == 0 )
     <link href="{{ asset('css/dark.css') }}" rel="stylesheet">
+    @endif
+    @endif
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 
 </head>
@@ -21,7 +25,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
+                  <img width="40" src="{{ asset('img/bis2.jpg') }}" alt="">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -32,30 +37,51 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     @if (Auth::user())
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Admin
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('admins') }}">List All Admins</a>
-                                <a class="dropdown-item" href="{{ route('register') }}">Add Admin</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="{{ route('students') }}"> All Students </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('programs') }}"> Programs </a>
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('admins') }}">List All Admins</a>
+                                    <a class="dropdown-item" href="{{ route('register') }}">Add Admin</a>
+                                </div>
                             </li>
-                    </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('students') }}"> All Students </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('programs') }}"> Programs </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Questions
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('questions') }}"> Student Question </a> <a
+                                        class="dropdown-item" href="{{ route('question.public') }}">Public Question</a>
+                                </div>
+                            </li>
+                        </ul>
                     @endif
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
+                        <li class="nav-item">
+                            @if (Auth::user())
+                           <form action="{{ route('darkmood' , Auth::user()->id) }}" method="POST">
+                            @endif
+                            @csrf
+                            <button class="nav-link btn btn-primary" >Change Theem</button>
+                           </form>
+                        </li>
                         @guest
+
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
@@ -68,7 +94,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
+                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -82,7 +108,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main id="main" class="py-4">
             @yield('content')
         </main>
     </div>

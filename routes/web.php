@@ -32,8 +32,11 @@ Route::get('/programs','ProgramController@index')->name('programs');
 // Questions Routes
 Route::get('/questions','QuestionController@index')->name('questions');
 Route::get('/question/edit/{id}','QuestionController@edit')->name('question.edit');
-Route::post('/question/edit/{id}','QuestionController@update')->name('question.update');
-Route::get('/question/show/{id}','QuestionController@show')->name('question.show');
+Route::post('/question/update/{id}','QuestionController@update')->name('question.update');
+Route::get('/question/public','QuestionController@public')->name('question.public');
+Route::get('/question/makePublic/{id}','QuestionController@makePublic')->name('question.makePublic');
+Route::get('/question/delete/{id}','QuestionController@destroy')->name('question.destroy');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/theem/dark/{id}', 'AdminController@darkmood')->name('darkmood');

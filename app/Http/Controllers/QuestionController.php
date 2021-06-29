@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $questions = Question::where('public', '=', 0)->get();
+        return view('question.index')->with('questions', $questions);
     }
 
     /**
@@ -55,9 +61,10 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+    public function edit($id)
     {
-        //
+        $question = Question::find($id);
+        return view('question.edit')->with('question', $question);
     }
 
     /**
@@ -67,9 +74,14 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(Request $request, $id)
     {
-        //
+        $question = Question::find($id);
+        $question->question = $request->question;
+        $question->answer = $request->answer;
+        $question->student_id = $request->student_id;
+        $question->save();
+        return redirect('questions')->with("done", "Edit Answer Done");
     }
 
     /**
@@ -78,8 +90,23 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+
+    public function destroy($id)
     {
-        //
+        $question = Question::find($id);
+        $question->delete();
+        return redirect()->back()->with('done', 'Deleted Done');
+    }
+    public function public()
+    {
+        $qestions =  Question::where("public", "=", 1)->get();
+        return view('question.public')->with('qestions', $qestions);
+    }
+    public function makePublic($id)
+    {
+        $question = Question::find($id);
+        $question->public = 1;
+        $question->save();
+        return redirect()->back()->with('done', 'Make Public Done');
     }
 }
