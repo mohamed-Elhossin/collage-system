@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2021 at 01:05 PM
+-- Generation Time: Jun 30, 2021 at 03:43 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.27
 
@@ -46,7 +46,9 @@ CREATE TABLE `final_decision` (
   `id` int(11) NOT NULL,
   `pre_decision_id` int(11) NOT NULL,
   `proram_id` int(11) NOT NULL,
-  `notes` varchar(100) NOT NULL
+  `notes` varchar(100) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -79,8 +81,20 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 CREATE TABLE `news` (
   `id` int(11) NOT NULL,
   `news` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL
+  `image` text NOT NULL DEFAULT 'default',
+  `pdf` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`id`, `news`, `image`, `pdf`, `created_at`, `updated_at`) VALUES
+(1, 'adsfasfsadfdsfas', '63346499.png', 'Mohamed El-hossin.pdf', '2021-06-30 07:39:51', '2021-06-30 07:39:51'),
+(2, 'sdafdsfsad', '63346499.png', 'Network part 1.pdf', '2021-06-30 07:40:44', '2021-06-30 07:40:44'),
+(3, 'bvxcbvcxbc', '63346499.png', 'Mohamed El-hossiny.pdf', '2021-06-30 07:41:56', '2021-06-30 07:41:56');
 
 -- --------------------------------------------------------
 
@@ -102,7 +116,9 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `pre_decision` (
   `id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL
+  `student_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -113,17 +129,19 @@ CREATE TABLE `pre_decision` (
 
 CREATE TABLE `programs` (
   `program_id` int(11) NOT NULL,
-  `program` text COLLATE utf8_unicode_ci DEFAULT NULL
+  `program` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `programs`
 --
 
-INSERT INTO `programs` (`program_id`, `program`) VALUES
-(1, 'اللغات'),
-(2, 'BIS نظم معلومات الاعمال'),
-(3, 'FMI الاسواق والمؤسسات المالية');
+INSERT INTO `programs` (`program_id`, `program`, `created_at`, `updated_at`) VALUES
+(1, 'اللغات', NULL, NULL),
+(2, 'BIS نظم معلومات الاعمال', NULL, NULL),
+(3, 'FMI الاسواق والمؤسسات المالية', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -135,8 +153,20 @@ CREATE TABLE `questions` (
   `id` int(11) NOT NULL,
   `question` varchar(250) NOT NULL,
   `answer` text NOT NULL DEFAULT 'without Answer',
-  `student_id` int(11) NOT NULL
+  `student_id` int(11) NOT NULL,
+  `public` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `questions`
+--
+
+INSERT INTO `questions` (`id`, `question`, `answer`, `student_id`, `public`, `created_at`, `updated_at`) VALUES
+(1, 'how to apply to BIS ?', 'خلاص مثلا انا جوبتك', 1718256, 1, NULL, '2021-06-29 18:06:40'),
+(3, 'ازاي اطبع شهاده تخرج', 'تعاله وانا هطبعهالك', 1718256, 0, NULL, '2021-06-29 18:05:05'),
+(4, 'اازاي اقدم عندكم', 'التفاصيل هتنزل ع الصفحه', 1718256, 0, NULL, '2021-06-29 07:34:30');
 
 -- --------------------------------------------------------
 
@@ -198,15 +228,17 @@ CREATE TABLE `student_requirements` (
 
 CREATE TABLE `theem` (
   `id` int(11) NOT NULL,
-  `them` int(1) NOT NULL
+  `them` int(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `theem`
 --
 
-INSERT INTO `theem` (`id`, `them`) VALUES
-(1, 1);
+INSERT INTO `theem` (`id`, `them`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, '2021-06-28 18:52:48');
 
 -- --------------------------------------------------------
 
@@ -222,6 +254,7 @@ CREATE TABLE `users` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `theem` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -230,9 +263,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `role`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Toma', 'm.m.m.elhossin@gmail.com', 1, NULL, '$2y$10$H3fxbEUrBGlnBOQBnRDqvuoxGgNHV.tEhnqIoi5.EuR93/vuQx812', NULL, '2021-06-27 07:07:52', '2021-06-27 07:07:52'),
-(3, 'AhmedEl hosisny', 'ahmed@gmail.com', 2, NULL, '$2y$10$WyveP4IN3mmdbQJYm9lahOt7AI2v/0y7sJBF0.PCdzcPzTValLkeK', NULL, '2021-06-27 13:50:58', '2021-06-27 13:50:58');
+INSERT INTO `users` (`id`, `name`, `email`, `role`, `email_verified_at`, `password`, `remember_token`, `theem`, `created_at`, `updated_at`) VALUES
+(1, 'Toma', 'm.m.m.elhossin@gmail.com', 1, NULL, '$2y$10$H3fxbEUrBGlnBOQBnRDqvuoxGgNHV.tEhnqIoi5.EuR93/vuQx812', NULL, 0, '2021-06-27 07:07:52', '2021-06-29 18:02:33'),
+(3, 'AhmedEl hosisny', 'ahmed@gmail.com', 2, NULL, '$2y$10$WyveP4IN3mmdbQJYm9lahOt7AI2v/0y7sJBF0.PCdzcPzTValLkeK', NULL, 0, '2021-06-27 13:50:58', '2021-06-28 19:03:28'),
+(5, 'nada Magdy', 'nada@yahoo.com', 2, NULL, '$2y$10$Frl4lDFqBxY2qXspuEcAw.CxGt4kaOykMyKgxhrHt7DAWtzNUSLO6', NULL, 0, '2021-06-28 08:12:16', '2021-06-29 05:56:15'),
+(6, 'ahmed', 'laila123@gmail.com', 1, NULL, '$2y$10$8CZUaqM3Myi/Ksh/3RrT4ubl0B.53LrhcVgOyMz04gIfIUmWYlQwa', NULL, 0, '2021-06-29 07:30:47', '2021-06-29 07:30:47'),
+(7, 'DR:mohamed Abdelsalam', 'abdelsalam@yahoo.com', 2, NULL, '$2y$10$Vzcj/sMAOWJU/Oo98kvFuutG5ZHW84bN4R9QPjBixH.QhG6xb5Msu', NULL, 0, '2021-06-29 07:31:17', '2021-06-29 18:03:44');
 
 --
 -- Indexes for dumped tables
@@ -345,7 +381,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pre_decision`
@@ -363,7 +399,7 @@ ALTER TABLE `programs`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `student_requirements`
@@ -381,7 +417,7 @@ ALTER TABLE `theem`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

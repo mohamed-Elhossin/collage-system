@@ -36,7 +36,17 @@ Route::post('/question/update/{id}','QuestionController@update')->name('question
 Route::get('/question/public','QuestionController@public')->name('question.public');
 Route::get('/question/makePublic/{id}','QuestionController@makePublic')->name('question.makePublic');
 Route::get('/question/delete/{id}','QuestionController@destroy')->name('question.destroy');
+#######################################
+// News Routes
+Route::get('/newss','NewsController@index')->name('newss');
+Route::get('/news/create','NewsController@create')->name('news.create');
+Route::post('/news/create','NewsController@store')->name('news.store');
+Route::get('/news/edit/{id}','NewsController@edit')->name('news.edit');
+Route::post('/news/update/{id}','NewsController@update')->name('news.update');
+Route::get('/news/show/{id}','NewsController@show')->name('news.show');
+Route::get('/news/delete/{id}','NewsController@destroy')->name('news.destroy');
 
 
+#####################################################
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/theem/dark/{id}', 'AdminController@darkmood')->name('darkmood');

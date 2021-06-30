@@ -67,6 +67,7 @@
                                          <option value="1">All Access</option>
                                          <option value="2">Sime Access</option>
                                          <option value="3">Reed Only</option>
+                                         <option value="4">Employee</option>
                                     </select>
                                 </div>
                             </div>
