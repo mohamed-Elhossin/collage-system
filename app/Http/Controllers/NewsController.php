@@ -54,6 +54,7 @@ class NewsController extends Controller
         $postPdfName= $postPdf->getClientOriginalName();
         $postPdf->move(public_path(). '/uploads/newspdf/', $postPdfName);
         $news->pdf =   $postPdfName;
+        $news->adminId = auth()->user()->id;
         $news->save();
         return redirect('newss')->with("done", "Added Done");
     }
